@@ -169,9 +169,13 @@ _plat__NvInitFromStorage()
 			// There was an error, fail the init, NVEnable can retry.
 			if (Result != TEE_ERROR_ITEM_NOT_FOUND) {
 #ifdef fTPMDebug
-				DMSG("Failed to open fTPM storage object");
+				DMSG("Failed to open fTPM storage object %d:  0x%08x", i, Result);
 #endif
+#if 0 // FIXME 
+	  // rsp: do not throw error, just try to create the storage
+	  // object
 				goto Error;
+#endif
 			}
 
 			// Storage object was not found, create it.
@@ -187,7 +191,7 @@ _plat__NvInitFromStorage()
 			// There was an error, fail the init, NVEnable can retry.
 			if (Result != TEE_SUCCESS) {
 #ifdef fTPMDebug
-				DMSG("Failed to create fTPM storage object");
+				DMSG("Failed to create fTPM storage object %d", i);
 #endif
 				goto Error;
 			}
